@@ -75,15 +75,22 @@ public class MainFrame extends JFrame {
         JScrollPane journalTableScroll = new JScrollPane(journalTable);
         journalTableScroll.setPreferredSize(new Dimension(1050, 1000));
 
-        JList ForconsList = new JList();
-        JScrollPane ForconsListScroll = new JScrollPane(ForconsList);
-        ForconsListScroll.setPreferredSize(new Dimension(250, 1000));
+        DefaultListModel<String> forconsListModel = new DefaultListModel<>();
+        forconsListModel.addElement("1, Бард, Горшок, 3, 6");
+        forconsListModel.addElement("2, Самурай, Дыо, 2, 2");
+        forconsListModel.addElement("3, Самурай, Гатс, 3, 5");
+        JList<String> forconsList = new JList<>(forconsListModel);
+        JScrollPane forconsListScroll = new JScrollPane(forconsList);
+        forconsListScroll.setPreferredSize(new Dimension(250, 1000));
+        forconsList.setCellRenderer(new ForconsRenderer());
+
+
 
 
         Box hboxJandF = Box.createHorizontalBox();
         hboxJandF.add(Box.createHorizontalGlue());
         hboxJandF.add(new JScrollPane(journalTableScroll));
-        hboxJandF.add(new JScrollPane(ForconsListScroll));
+        hboxJandF.add(new JScrollPane(forconsListScroll));
         hboxJandF.add(Box.createHorizontalGlue());
 
         Box hboxSkills = Box.createHorizontalBox();
@@ -103,7 +110,6 @@ public class MainFrame extends JFrame {
         contentBox.add(hboxSkills);
         contentBox.add(Box.createVerticalStrut(20));
         getContentPane().add(contentBox, BorderLayout.CENTER);
-
 
     }
 
