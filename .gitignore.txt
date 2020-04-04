@@ -1,6 +1,6 @@
 *.iml
 *.txt
-.idea
-out
+/.idea
+/out
 *.png
 *.jpg
