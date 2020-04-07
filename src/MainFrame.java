@@ -1,13 +1,12 @@
+import org.apache.batik.swing.JSVGCanvas;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.*;
-
 
 public class MainFrame extends JFrame {
 
     private JFileChooser fileChooser = null;
+    private JFrame frame = this;
 
     private MainFrame() {
 
@@ -16,7 +15,6 @@ public class MainFrame extends JFrame {
         setExtendedState(MAXIMIZED_BOTH);
 
         JMenuBar menuBar = new JMenuBar();
-        setJMenuBar(menuBar);
 
         JMenu fileMenu = new JMenu("Файл");
         menuBar.add(fileMenu);
@@ -83,25 +81,52 @@ public class MainFrame extends JFrame {
         JScrollPane forconsListScroll = new JScrollPane(forconsList);
         forconsListScroll.setPreferredSize(new Dimension(250, 1000));
         forconsList.setCellRenderer(new ForconsRenderer());
-
-
-
+        forconsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         Box hboxJandF = Box.createHorizontalBox();
         hboxJandF.add(Box.createHorizontalGlue());
         hboxJandF.add(new JScrollPane(journalTableScroll));
         hboxJandF.add(new JScrollPane(forconsListScroll));
-        hboxJandF.add(Box.createHorizontalGlue());
+
+        JButton butSkill1 = new JButton();
+        JButton butSkill2 = new JButton();
+        JButton butSkill3 = new JButton();
+        JButton butSkill4 = new JButton();
+        JButton butSkill5 = new JButton();
+        JButton butSkill6 = new JButton();
+
+        butSkill1.setLayout(null);
+        JSVGCanvas svgCanvas = new JSVGCanvas();
+        svgCanvas.setURI("file:/D:/Джава/Forcons/rac.svg");
+        svgCanvas.setSize(50,50);
+        svgCanvas.setLocation(0,0);
+
+        ImageIcon im = new ImageIcon("rast.png");
+        Image imm = im.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+        im.setImage(imm);
+
+        butSkill1.add(svgCanvas);
+        butSkill1.setPreferredSize(new Dimension(50,50));
+        butSkill1.setMaximumSize(new Dimension(50,50));
+        butSkill2.setIcon(im);
+        butSkill2.setPreferredSize(new Dimension(50,50));
+        butSkill2.setBorderPainted(false);
+        butSkill2.setFocusPainted(false);
+        butSkill2.setContentAreaFilled(false);
 
         Box hboxSkills = Box.createHorizontalBox();
         hboxSkills.add(Box.createHorizontalStrut(100));
-        hboxSkills.add(new JLabel("Способность"));
+        hboxSkills.add(butSkill1);
         hboxSkills.add(Box.createHorizontalStrut(10));
-        hboxSkills.add(new JLabel("Способность"));
+        hboxSkills.add(butSkill2);
         hboxSkills.add(Box.createHorizontalStrut(10));
-        hboxSkills.add(new JLabel("Способность"));
+        hboxSkills.add(butSkill3);
         hboxSkills.add(Box.createHorizontalStrut(10));
-        hboxSkills.add(new JLabel("Способность"));
+        hboxSkills.add(butSkill4);
+        hboxSkills.add(Box.createHorizontalStrut(10));
+        hboxSkills.add(butSkill5);
+        hboxSkills.add(Box.createHorizontalStrut(10));
+        hboxSkills.add(butSkill6);
         hboxSkills.add(Box.createHorizontalGlue());
 
         Box contentBox = Box.createVerticalBox();
@@ -112,6 +137,8 @@ public class MainFrame extends JFrame {
         getContentPane().add(contentBox, BorderLayout.CENTER);
 
     }
+
+
 
     public static void main(String[] args) {
         MainFrame frame = new MainFrame();
