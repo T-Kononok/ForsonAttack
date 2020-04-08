@@ -88,18 +88,18 @@ public class MainFrame extends JFrame {
 
         //Создаем скрол-список форсонов
         DefaultListModel<String> forconsListModel = new DefaultListModel<>();
-        forconsListModel.addElement("1, Бард, Горшок, 3, 6");
-        forconsListModel.addElement("2, Самурай, Дыо, 2, 2");
-        forconsListModel.addElement("3, Самурай, Гатс, 3, 5");
-        forconsListModel.addElement("3, Самурай, Гатс, 3, 5");
-        forconsListModel.addElement("3, Самурай, Гатс, 3, 5");
-        forconsListModel.addElement("3, Бард, Гатс, 3, 5");
-        forconsListModel.addElement("3, Самурай, Гатс, 3, 5");
-        forconsListModel.addElement("3, Самурай, Гатс, 3, 5");
-        forconsListModel.addElement("3, Инсектоид, Гатс, 3, 5");
-        forconsListModel.addElement("3, Самурай, Гатс, 3, 5");
-        forconsListModel.addElement("3, Самурай, Гатс, 3, 5");
-        forconsListModel.addElement("3, Самурай, Гатс, 3, 5");
+        forconsListModel.addElement("1, Bard, Горшок, 3, 6");
+        forconsListModel.addElement("2, Самурай, АскаМисатоРей, 2, 2");
+        forconsListModel.addElement("3, Инсектоид, Стив, 1, 2");
+        forconsListModel.addElement("4, Смотритель, Стив, 1, 0");
+        forconsListModel.addElement("5, Bard, Горшок, 3, 6");
+        forconsListModel.addElement("6, Инсектоид, Аска, 2, 2");
+        forconsListModel.addElement("7, Инсектоид, Стив, 1, 8");
+        forconsListModel.addElement("8, Смотритель, Стив, 1, 11");
+        forconsListModel.addElement("9, Bard, Горшок, 3, 6");
+        forconsListModel.addElement("10, Самурай, Аска, 2, 2");
+        forconsListModel.addElement("11, Самурай, Стив, 1, 5");
+        forconsListModel.addElement("12, Смотритель, Стив, 1, 4");
 
         JList<String> forconsList = new JList<>(forconsListModel);
         forconsList.setCellRenderer(new ForconsRenderer());
@@ -134,8 +134,8 @@ public class MainFrame extends JFrame {
         panelFull.add(butSkill5);
         panelFull.add(butSkill6);
         int interval = 50;
-        butSkill1.setSize(50,50);
-        butSkill1.setLocation((panelFull.getWidth()-(butSkill1.getWidth()+interval)*6+interval)/2,583);
+        butSkill1.setSize(70,70);
+        butSkill1.setLocation((panelFull.getWidth()-(butSkill1.getWidth()+interval)*6+interval)/2,573);
         butSkill2.setSize(butSkill1.getSize());
         butSkill2.setLocation(butSkill1.getX()+butSkill1.getWidth()+interval,butSkill1.getY());
         butSkill3.setSize(butSkill1.getSize());
@@ -154,23 +154,23 @@ public class MainFrame extends JFrame {
         JSVGCanvas svgCanvas4 = new JSVGCanvas();
         JSVGCanvas svgCanvas5 = new JSVGCanvas();
         JSVGCanvas svgCanvas6 = new JSVGCanvas();
-        svgCanvas1.setURI("file:/D:/Джава/Forcons/Skill1.svg");
-        svgCanvas2.setURI("file:/D:/Джава/Forcons/Skill2.svg");
+        svgCanvas1.setURI("file:/D:/Джава/Forcons/bard.svg");
+        svgCanvas2.setURI("file:/D:/Джава/Forcons/samurai.svg");
         svgCanvas3.setURI("file:/D:/Джава/Forcons/Skill3.svg");
-        svgCanvas4.setURI("file:/D:/Джава/Forcons/Skill4.svg");
-        svgCanvas5.setURI("file:/D:/Джава/Forcons/Skill5.svg");
+        svgCanvas4.setURI("file:/D:/Джава/Forcons/smotritel.svg");
+        svgCanvas5.setURI("file:/D:/Джава/Forcons/goblin.svg");
         svgCanvas6.setURI("file:/D:/Джава/Forcons/Skill6.svg");
-        svgCanvas1.setSize(50,50);
+        svgCanvas1.setSize(70,70);
         svgCanvas1.setLocation(0,0);
-        svgCanvas2.setSize(50,50);
+        svgCanvas2.setSize(svgCanvas1.getSize());
         svgCanvas2.setLocation(0,0);
-        svgCanvas3.setSize(50,50);
+        svgCanvas3.setSize(svgCanvas1.getSize());
         svgCanvas3.setLocation(0,0);
-        svgCanvas4.setSize(50,50);
+        svgCanvas4.setSize(svgCanvas1.getSize());
         svgCanvas4.setLocation(0,0);
-        svgCanvas5.setSize(50,50);
+        svgCanvas5.setSize(svgCanvas1.getSize());
         svgCanvas5.setLocation(0,0);
-        svgCanvas6.setSize(50,50);
+        svgCanvas6.setSize(svgCanvas1.getSize());
         svgCanvas6.setLocation(0,0);
 
         butSkill1.add(svgCanvas1);
