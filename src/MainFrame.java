@@ -1,12 +1,12 @@
 import org.apache.batik.swing.JSVGCanvas;
 import java.awt.*;
 import java.io.File;
+import java.util.Objects;
 import javax.swing.*;
 
 public class MainFrame extends JFrame {
 
     private JFileChooser fileChooser = null;
-    private JFrame frame = this;
 
     private MainFrame() {
 
@@ -14,7 +14,17 @@ public class MainFrame extends JFrame {
 
         setExtendedState(MAXIMIZED_BOTH);
 
+        //Создаем панель-контейнер с фоном
+        JImagePanel panelFull = new JImagePanel();
+        panelFull.setLayout(null);
+        panelFull.setSize(1280,658);
+        panelFull.setLocation(0,0);
+
+        //создаем кнопку меню
         JMenuBar menuBar = new JMenuBar();
+        menuBar.setSize(45,25);
+        menuBar.setLocation(0,0);
+        panelFull.add(menuBar);
 
         JMenu fileMenu = new JMenu("Файл");
         menuBar.add(fileMenu);
@@ -69,76 +79,113 @@ public class MainFrame extends JFrame {
             //saveToGraphicsFile(fileChooser.getSelectedFile());
         });
 
+        //Создаем скрол-таблицу журнала
         JTable journalTable = new JTable();
         JScrollPane journalTableScroll = new JScrollPane(journalTable);
-        journalTableScroll.setPreferredSize(new Dimension(1050, 1000));
+        panelFull.add(journalTableScroll);
+        journalTableScroll.setSize(1050, 533);
+        journalTableScroll.setLocation(0,25);
 
+        //Создаем скрол-список форсонов
         DefaultListModel<String> forconsListModel = new DefaultListModel<>();
         forconsListModel.addElement("1, Бард, Горшок, 3, 6");
         forconsListModel.addElement("2, Самурай, Дыо, 2, 2");
         forconsListModel.addElement("3, Самурай, Гатс, 3, 5");
+        forconsListModel.addElement("3, Самурай, Гатс, 3, 5");
+        forconsListModel.addElement("3, Самурай, Гатс, 3, 5");
+        forconsListModel.addElement("3, Бард, Гатс, 3, 5");
+        forconsListModel.addElement("3, Самурай, Гатс, 3, 5");
+        forconsListModel.addElement("3, Самурай, Гатс, 3, 5");
+        forconsListModel.addElement("3, Инсектоид, Гатс, 3, 5");
+        forconsListModel.addElement("3, Самурай, Гатс, 3, 5");
+        forconsListModel.addElement("3, Самурай, Гатс, 3, 5");
+        forconsListModel.addElement("3, Самурай, Гатс, 3, 5");
+
         JList<String> forconsList = new JList<>(forconsListModel);
-        JScrollPane forconsListScroll = new JScrollPane(forconsList);
-        forconsListScroll.setPreferredSize(new Dimension(250, 1000));
         forconsList.setCellRenderer(new ForconsRenderer());
         forconsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        Box hboxJandF = Box.createHorizontalBox();
-        hboxJandF.add(Box.createHorizontalGlue());
-        hboxJandF.add(new JScrollPane(journalTableScroll));
-        hboxJandF.add(new JScrollPane(forconsListScroll));
+        JScrollPane forconsListScroll = new JScrollPane(forconsList);
+        panelFull.add(forconsListScroll);
+        forconsListScroll.setSize(220, 533);
+        forconsListScroll.setLocation(1060,25);
 
+        //Создаем пикчу класса
+
+        //Создаем надпись имени
+
+        //Создаем кнопки-способности
         JButton butSkill1 = new JButton();
         JButton butSkill2 = new JButton();
         JButton butSkill3 = new JButton();
         JButton butSkill4 = new JButton();
         JButton butSkill5 = new JButton();
         JButton butSkill6 = new JButton();
-
         butSkill1.setLayout(null);
-        JSVGCanvas svgCanvas = new JSVGCanvas();
-        svgCanvas.setURI("file:/D:/Джава/Forcons/rac.svg");
-        svgCanvas.setSize(50,50);
-        svgCanvas.setLocation(0,0);
+        butSkill2.setLayout(null);
+        butSkill3.setLayout(null);
+        butSkill4.setLayout(null);
+        butSkill5.setLayout(null);
+        butSkill6.setLayout(null);
+        panelFull.add(butSkill1);
+        panelFull.add(butSkill2);
+        panelFull.add(butSkill3);
+        panelFull.add(butSkill4);
+        panelFull.add(butSkill5);
+        panelFull.add(butSkill6);
+        int interval = 50;
+        butSkill1.setSize(50,50);
+        butSkill1.setLocation((panelFull.getWidth()-(butSkill1.getWidth()+interval)*6+interval)/2,583);
+        butSkill2.setSize(butSkill1.getSize());
+        butSkill2.setLocation(butSkill1.getX()+butSkill1.getWidth()+interval,butSkill1.getY());
+        butSkill3.setSize(butSkill1.getSize());
+        butSkill3.setLocation(butSkill2.getX()+butSkill1.getWidth()+interval,butSkill1.getY());
+        butSkill4.setSize(butSkill1.getSize());
+        butSkill4.setLocation(butSkill3.getX()+butSkill1.getWidth()+interval,butSkill1.getY());
+        butSkill5.setSize(butSkill1.getSize());
+        butSkill5.setLocation(butSkill4.getX()+butSkill1.getWidth()+interval,butSkill1.getY());
+        butSkill6.setSize(butSkill1.getSize());
+        butSkill6.setLocation(butSkill5.getX()+butSkill1.getWidth()+interval,butSkill1.getY());
 
-        ImageIcon im = new ImageIcon("rast.png");
-        Image imm = im.getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
-        im.setImage(imm);
 
-        butSkill1.add(svgCanvas);
-        butSkill1.setPreferredSize(new Dimension(50,50));
-        butSkill1.setMaximumSize(new Dimension(50,50));
-        butSkill2.setIcon(im);
-        butSkill2.setPreferredSize(new Dimension(50,50));
-        butSkill2.setBorderPainted(false);
-        butSkill2.setFocusPainted(false);
-        butSkill2.setContentAreaFilled(false);
+        JSVGCanvas svgCanvas1 = new JSVGCanvas();
+        JSVGCanvas svgCanvas2 = new JSVGCanvas();
+        JSVGCanvas svgCanvas3 = new JSVGCanvas();
+        JSVGCanvas svgCanvas4 = new JSVGCanvas();
+        JSVGCanvas svgCanvas5 = new JSVGCanvas();
+        JSVGCanvas svgCanvas6 = new JSVGCanvas();
+        svgCanvas1.setURI("file:/D:/Джава/Forcons/Skill1.svg");
+        svgCanvas2.setURI("file:/D:/Джава/Forcons/Skill2.svg");
+        svgCanvas3.setURI("file:/D:/Джава/Forcons/Skill3.svg");
+        svgCanvas4.setURI("file:/D:/Джава/Forcons/Skill4.svg");
+        svgCanvas5.setURI("file:/D:/Джава/Forcons/Skill5.svg");
+        svgCanvas6.setURI("file:/D:/Джава/Forcons/Skill6.svg");
+        svgCanvas1.setSize(50,50);
+        svgCanvas1.setLocation(0,0);
+        svgCanvas2.setSize(50,50);
+        svgCanvas2.setLocation(0,0);
+        svgCanvas3.setSize(50,50);
+        svgCanvas3.setLocation(0,0);
+        svgCanvas4.setSize(50,50);
+        svgCanvas4.setLocation(0,0);
+        svgCanvas5.setSize(50,50);
+        svgCanvas5.setLocation(0,0);
+        svgCanvas6.setSize(50,50);
+        svgCanvas6.setLocation(0,0);
 
-        Box hboxSkills = Box.createHorizontalBox();
-        hboxSkills.add(Box.createHorizontalStrut(100));
-        hboxSkills.add(butSkill1);
-        hboxSkills.add(Box.createHorizontalStrut(10));
-        hboxSkills.add(butSkill2);
-        hboxSkills.add(Box.createHorizontalStrut(10));
-        hboxSkills.add(butSkill3);
-        hboxSkills.add(Box.createHorizontalStrut(10));
-        hboxSkills.add(butSkill4);
-        hboxSkills.add(Box.createHorizontalStrut(10));
-        hboxSkills.add(butSkill5);
-        hboxSkills.add(Box.createHorizontalStrut(10));
-        hboxSkills.add(butSkill6);
-        hboxSkills.add(Box.createHorizontalGlue());
+        butSkill1.add(svgCanvas1);
+        butSkill2.add(svgCanvas2);
+        butSkill3.add(svgCanvas3);
+        butSkill4.add(svgCanvas4);
+        butSkill5.add(svgCanvas5);
+        butSkill6.add(svgCanvas6);
 
-        Box contentBox = Box.createVerticalBox();
-        contentBox.add(hboxJandF);
-        contentBox.add(Box.createVerticalStrut(20));
-        contentBox.add(hboxSkills);
-        contentBox.add(Box.createVerticalStrut(20));
-        getContentPane().add(contentBox, BorderLayout.CENTER);
+        //Создаем пикчи кол-ва действий
+
+        getContentPane().setLayout(null);
+        getContentPane().add(panelFull);
 
     }
-
-
 
     public static void main(String[] args) {
         MainFrame frame = new MainFrame();
