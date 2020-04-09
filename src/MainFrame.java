@@ -1,12 +1,17 @@
 import org.apache.batik.swing.JSVGCanvas;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.Objects;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class MainFrame extends JFrame {
 
     private JFileChooser fileChooser = null;
+    private ForconsRenderer rend;
 
     private MainFrame() {
 
@@ -110,6 +115,80 @@ public class MainFrame extends JFrame {
         forconsListScroll.setSize(220, 533);
         forconsListScroll.setLocation(1060,25);
 
+        //создаем пикчи
+        JSVGCanvas svgCanvas1 = new JSVGCanvas();
+        JSVGCanvas svgCanvas2 = new JSVGCanvas();
+        JSVGCanvas svgCanvas3 = new JSVGCanvas();
+        JSVGCanvas svgCanvas4 = new JSVGCanvas();
+        JSVGCanvas svgCanvas5 = new JSVGCanvas();
+        JSVGCanvas svgCanvas6 = new JSVGCanvas();
+
+        svgCanvas1.setURI("file:/D:/Джава/Forcons/bardSkill1.svg");
+        svgCanvas2.setURI("file:/D:/Джава/Forcons/bardSkill2.svg");
+        svgCanvas3.setURI("file:/D:/Джава/Forcons/bardSkill3.svg");
+        svgCanvas4.setURI("file:/D:/Джава/Forcons/bardSkill4.svg");
+        svgCanvas5.setURI("file:/D:/Джава/Forcons/bardSkill5.svg");
+        svgCanvas6.setURI("file:/D:/Джава/Forcons/bardSkill6.svg");
+        svgCanvas1.setSize(70,70);
+        svgCanvas1.setLocation(0,0);
+        svgCanvas2.setSize(svgCanvas1.getSize());
+        svgCanvas2.setLocation(0,0);
+        svgCanvas3.setSize(svgCanvas1.getSize());
+        svgCanvas3.setLocation(0,0);
+        svgCanvas4.setSize(svgCanvas1.getSize());
+        svgCanvas4.setLocation(0,0);
+        svgCanvas5.setSize(svgCanvas1.getSize());
+        svgCanvas5.setLocation(0,0);
+        svgCanvas6.setSize(svgCanvas1.getSize());
+        svgCanvas6.setLocation(0,0);
+
+        //создаем слушателей мыши и списка
+        forconsList.addListSelectionListener(evt -> {
+            if (!evt.getValueIsAdjusting()) {
+                String val = forconsList.getSelectedValue().toString();
+                System.out.println(val);
+                String[] subStr = val.split(", ");
+                switch (subStr[1]) {
+                    case ("Бард"):
+                    case ("Bard"):
+                        svgCanvas1.setURI("file:/D:/Джава/Forcons/bardSkill1.svg");
+                        svgCanvas2.setURI("file:/D:/Джава/Forcons/bardSkill2.svg");
+                        svgCanvas3.setURI("file:/D:/Джава/Forcons/bardSkill3.svg");
+                        svgCanvas4.setURI("file:/D:/Джава/Forcons/bardSkill4.svg");
+                        svgCanvas5.setURI("file:/D:/Джава/Forcons/bardSkill5.svg");
+                        svgCanvas6.setURI("file:/D:/Джава/Forcons/bardSkill6.svg");
+                        break;
+                    case ("Самурай"):
+                    case ("Samurai"):
+                        svgCanvas1.setURI("file:/D:/Джава/Forcons/samuraiSkill1.svg");
+                        svgCanvas2.setURI("file:/D:/Джава/Forcons/samuraiSkill2.svg");
+                        svgCanvas3.setURI("file:/D:/Джава/Forcons/samuraiSkill3.svg");
+                        svgCanvas4.setURI("file:/D:/Джава/Forcons/samuraiSkill4.svg");
+                        svgCanvas5.setURI("file:/D:/Джава/Forcons/samuraiSkill5.svg");
+                        svgCanvas6.setURI("file:/D:/Джава/Forcons/samuraiSkill6.svg");
+                        break;
+                    case ("Инсектоид"):
+                    case ("Indectoid"):
+                        svgCanvas1.setURI("file:/D:/Джава/Forcons/insectSkill1.svg");
+                        svgCanvas2.setURI("file:/D:/Джава/Forcons/insectSkill2.svg");
+                        svgCanvas3.setURI("file:/D:/Джава/Forcons/insectSkill3.svg");
+                        svgCanvas4.setURI("file:/D:/Джава/Forcons/insectSkill4.svg");
+                        svgCanvas5.setURI("file:/D:/Джава/Forcons/insectSkill5.svg");
+                        svgCanvas6.setURI("file:/D:/Джава/Forcons/insectSkill6.svg");
+                        break;
+                    case ("Смотритель"):
+                    case ("Smotritel"):
+                        svgCanvas1.setURI("file:/D:/Джава/Forcons/smotritelSkill1.svg");
+                        svgCanvas2.setURI("file:/D:/Джава/Forcons/smotritelSkill2.svg");
+                        svgCanvas3.setURI("file:/D:/Джава/Forcons/smotritelSkill3.svg");
+                        svgCanvas4.setURI("file:/D:/Джава/Forcons/smotritelSkill4.svg");
+                        svgCanvas5.setURI("file:/D:/Джава/Forcons/smotritelSkill5.svg");
+                        svgCanvas6.setURI("file:/D:/Джава/Forcons/smotritelSkill6.svg");
+                        break;
+                }
+            }
+        });
+
         //Создаем пикчу класса
 
         //Создаем надпись имени
@@ -146,32 +225,6 @@ public class MainFrame extends JFrame {
         butSkill5.setLocation(butSkill4.getX()+butSkill1.getWidth()+interval,butSkill1.getY());
         butSkill6.setSize(butSkill1.getSize());
         butSkill6.setLocation(butSkill5.getX()+butSkill1.getWidth()+interval,butSkill1.getY());
-
-
-        JSVGCanvas svgCanvas1 = new JSVGCanvas();
-        JSVGCanvas svgCanvas2 = new JSVGCanvas();
-        JSVGCanvas svgCanvas3 = new JSVGCanvas();
-        JSVGCanvas svgCanvas4 = new JSVGCanvas();
-        JSVGCanvas svgCanvas5 = new JSVGCanvas();
-        JSVGCanvas svgCanvas6 = new JSVGCanvas();
-        svgCanvas1.setURI("file:/D:/Джава/Forcons/bard.svg");
-        svgCanvas2.setURI("file:/D:/Джава/Forcons/samurai.svg");
-        svgCanvas3.setURI("file:/D:/Джава/Forcons/Skill3.svg");
-        svgCanvas4.setURI("file:/D:/Джава/Forcons/smotritel.svg");
-        svgCanvas5.setURI("file:/D:/Джава/Forcons/goblin.svg");
-        svgCanvas6.setURI("file:/D:/Джава/Forcons/Skill6.svg");
-        svgCanvas1.setSize(70,70);
-        svgCanvas1.setLocation(0,0);
-        svgCanvas2.setSize(svgCanvas1.getSize());
-        svgCanvas2.setLocation(0,0);
-        svgCanvas3.setSize(svgCanvas1.getSize());
-        svgCanvas3.setLocation(0,0);
-        svgCanvas4.setSize(svgCanvas1.getSize());
-        svgCanvas4.setLocation(0,0);
-        svgCanvas5.setSize(svgCanvas1.getSize());
-        svgCanvas5.setLocation(0,0);
-        svgCanvas6.setSize(svgCanvas1.getSize());
-        svgCanvas6.setLocation(0,0);
 
         butSkill1.add(svgCanvas1);
         butSkill2.add(svgCanvas2);

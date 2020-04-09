@@ -7,6 +7,7 @@ public class ForconsRenderer implements ListCellRenderer<String> {
 
     private JPanel fon2 = new JPanel();
     private JLabel number = new JLabel();
+    private String forsonClass;
     private JSVGCanvas svgBard = new JSVGCanvas();
     private JSVGCanvas svgInsectoid = new JSVGCanvas();
     private JSVGCanvas svgSamurai = new JSVGCanvas();
@@ -22,7 +23,7 @@ public class ForconsRenderer implements ListCellRenderer<String> {
     private JSVGCanvas svgPoint6 = new JSVGCanvas();
     private JSVGCanvas svgPoint7 = new JSVGCanvas();
     private JLabel point = new JLabel();
-    Font fontName = new Font("Verdana", Font.BOLD, 15);
+    private Font fontName = new Font("Verdana", Font.BOLD, 15);
 
     ForconsRenderer() {
 
@@ -116,6 +117,7 @@ public class ForconsRenderer implements ListCellRenderer<String> {
                 svgSamurai.setLocation(20, 1000);
                 svgInsectoid.setLocation(20, 1000);
                 svgSmotritel.setLocation(20, 1000);
+                forsonClass = "Ba";
                 break;
             case ("Самурай"):
             case ("Samurai"):
@@ -123,6 +125,7 @@ public class ForconsRenderer implements ListCellRenderer<String> {
                 svgSamurai.setLocation(20, 0);
                 svgInsectoid.setLocation(20, 1000);
                 svgSmotritel.setLocation(20, 1000);
+                forsonClass = "Sa";
                 break;
             case ("Инсектоид"):
             case ("Indectoid"):
@@ -130,6 +133,7 @@ public class ForconsRenderer implements ListCellRenderer<String> {
                 svgSamurai.setLocation(20, 1000);
                 svgInsectoid.setLocation(20, 0);
                 svgSmotritel.setLocation(20, 1000);
+                forsonClass = "In";
                 break;
             case ("Смотритель"):
             case ("Smotritel"):
@@ -137,6 +141,7 @@ public class ForconsRenderer implements ListCellRenderer<String> {
                 svgSamurai.setLocation(20, 1000);
                 svgInsectoid.setLocation(20, 1000);
                 svgSmotritel.setLocation(20, 0);
+                forsonClass = "Sm";
                 break;
             default:
                 JOptionPane.showMessageDialog(null, "Не правильно написано навзание класса!",
@@ -270,7 +275,7 @@ public class ForconsRenderer implements ListCellRenderer<String> {
                 break;
         }
 
-        Color fonFors = new Color(192, 192, 192);
+        Color fonFors;
         if (isSelected) {
             fonFors = new Color(218, 165, 32);
         } else {
@@ -279,5 +284,13 @@ public class ForconsRenderer implements ListCellRenderer<String> {
         fon2.setBackground(fonFors);
 
         return fon2;
+    }
+
+    String getForsonClass() {
+        return forsonClass;
+    }
+
+    String getNumber() {
+        return number.getText();
     }
 }
