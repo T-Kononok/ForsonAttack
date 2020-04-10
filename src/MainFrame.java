@@ -8,11 +8,11 @@ import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.ScrollBarUI;
 
 public class MainFrame extends JFrame {
 
     private JFileChooser fileChooser = null;
-    private ForconsRenderer rend;
 
     private MainFrame() {
 
@@ -88,9 +88,18 @@ public class MainFrame extends JFrame {
         //Создаем скрол-таблицу журнала
         JTable journalTable = new JTable();
         JScrollPane journalTableScroll = new JScrollPane(journalTable);
-        panelFull.add(journalTableScroll);
+        journalTableScroll.getVerticalScrollBar().setUI(new MyScrollbarUI());
+        journalTableScroll.getHorizontalScrollBar().setUI(new MyScrollbarUI());
+        journalTableScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        journalTableScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        JImagePanel corner = new JImagePanel();
+        journalTableScroll.setCorner(journalTableScroll.LOWER_RIGHT_CORNER, corner);
+        journalTableScroll.setBorder(BorderFactory.createEmptyBorder());
+
         journalTableScroll.setSize(1050, 533);
         journalTableScroll.setLocation(0,25);
+
+        panelFull.add(journalTableScroll);
 
         //создаем холсты для способностей
         JSVGCanvas svgCanvas1 = new JSVGCanvas();
@@ -195,7 +204,7 @@ public class MainFrame extends JFrame {
         labelName.setVerticalAlignment(JLabel.CENTER);
         labelName.setHorizontalAlignment(JLabel.CENTER);
 
-        //labelName.setBorder(BorderFactory.createLineBorder(Color.RED));
+        labelName.setBorder(BorderFactory.createLineBorder(Color.RED));
 
         panelFull.add(labelName);
 
@@ -239,8 +248,10 @@ public class MainFrame extends JFrame {
         JList<String> forconsList = new JList<>(forconsListModel);
         forconsList.setCellRenderer(new ForconsRenderer());
         forconsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
         JScrollPane forconsListScroll = new JScrollPane(forconsList);
+        forconsListScroll.getVerticalScrollBar().setUI(new MyScrollbarUI());
+        forconsListScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        forconsListScroll.setBorder(BorderFactory.createEmptyBorder());
         panelFull.add(forconsListScroll);
         forconsListScroll.setSize(220, 533);
         forconsListScroll.setLocation(1060,25);
