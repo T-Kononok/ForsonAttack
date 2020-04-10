@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.Objects;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -25,7 +26,7 @@ public class MainFrame extends JFrame {
         panelFull.setSize(1280,658);
         panelFull.setLocation(0,0);
 
-        //создаем кнопку меню
+        //создаем меню
         JMenuBar menuBar = new JMenuBar();
         menuBar.setSize(45,25);
         menuBar.setLocation(0,0);
@@ -91,31 +92,7 @@ public class MainFrame extends JFrame {
         journalTableScroll.setSize(1050, 533);
         journalTableScroll.setLocation(0,25);
 
-        //Создаем скрол-список форсонов
-        DefaultListModel<String> forconsListModel = new DefaultListModel<>();
-        forconsListModel.addElement("1, Bard, Горшок, 3, 6");
-        forconsListModel.addElement("2, Самурай, АскаМисатоРей, 2, 2");
-        forconsListModel.addElement("3, Инсектоид, Стив, 1, 2");
-        forconsListModel.addElement("4, Смотритель, Стив, 1, 0");
-        forconsListModel.addElement("5, Bard, Горшок, 3, 6");
-        forconsListModel.addElement("6, Инсектоид, Аска, 2, 2");
-        forconsListModel.addElement("7, Инсектоид, Стив, 1, 8");
-        forconsListModel.addElement("8, Смотритель, Стив, 1, 11");
-        forconsListModel.addElement("9, Bard, Горшок, 3, 6");
-        forconsListModel.addElement("10, Самурай, Аска, 2, 2");
-        forconsListModel.addElement("11, Самурай, Стив, 1, 5");
-        forconsListModel.addElement("12, Смотритель, Стив, 1, 4");
-
-        JList<String> forconsList = new JList<>(forconsListModel);
-        forconsList.setCellRenderer(new ForconsRenderer());
-        forconsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-        JScrollPane forconsListScroll = new JScrollPane(forconsList);
-        panelFull.add(forconsListScroll);
-        forconsListScroll.setSize(220, 533);
-        forconsListScroll.setLocation(1060,25);
-
-        //создаем пикчи
+        //создаем холсты для способностей
         JSVGCanvas svgCanvas1 = new JSVGCanvas();
         JSVGCanvas svgCanvas2 = new JSVGCanvas();
         JSVGCanvas svgCanvas3 = new JSVGCanvas();
@@ -123,12 +100,13 @@ public class MainFrame extends JFrame {
         JSVGCanvas svgCanvas5 = new JSVGCanvas();
         JSVGCanvas svgCanvas6 = new JSVGCanvas();
 
-        svgCanvas1.setURI("file:/D:/Джава/Forcons/bardSkill1.svg");
-        svgCanvas2.setURI("file:/D:/Джава/Forcons/bardSkill2.svg");
-        svgCanvas3.setURI("file:/D:/Джава/Forcons/bardSkill3.svg");
-        svgCanvas4.setURI("file:/D:/Джава/Forcons/bardSkill4.svg");
-        svgCanvas5.setURI("file:/D:/Джава/Forcons/bardSkill5.svg");
-        svgCanvas6.setURI("file:/D:/Джава/Forcons/bardSkill6.svg");
+        svgCanvas1.setBackground(new Color(0,0,0,0));
+        svgCanvas2.setBackground(new Color(0,0,0,0));
+        svgCanvas3.setBackground(new Color(0,0,0,0));
+        svgCanvas4.setBackground(new Color(0,0,0,0));
+        svgCanvas5.setBackground(new Color(0,0,0,0));
+        svgCanvas6.setBackground(new Color(0,0,0,0));
+        
         svgCanvas1.setSize(70,70);
         svgCanvas1.setLocation(0,0);
         svgCanvas2.setSize(svgCanvas1.getSize());
@@ -142,56 +120,14 @@ public class MainFrame extends JFrame {
         svgCanvas6.setSize(svgCanvas1.getSize());
         svgCanvas6.setLocation(0,0);
 
-        //создаем слушателей мыши и списка
-        forconsList.addListSelectionListener(evt -> {
-            if (!evt.getValueIsAdjusting()) {
-                String val = forconsList.getSelectedValue().toString();
-                System.out.println(val);
-                String[] subStr = val.split(", ");
-                switch (subStr[1]) {
-                    case ("Бард"):
-                    case ("Bard"):
-                        svgCanvas1.setURI("file:/D:/Джава/Forcons/bardSkill1.svg");
-                        svgCanvas2.setURI("file:/D:/Джава/Forcons/bardSkill2.svg");
-                        svgCanvas3.setURI("file:/D:/Джава/Forcons/bardSkill3.svg");
-                        svgCanvas4.setURI("file:/D:/Джава/Forcons/bardSkill4.svg");
-                        svgCanvas5.setURI("file:/D:/Джава/Forcons/bardSkill5.svg");
-                        svgCanvas6.setURI("file:/D:/Джава/Forcons/bardSkill6.svg");
-                        break;
-                    case ("Самурай"):
-                    case ("Samurai"):
-                        svgCanvas1.setURI("file:/D:/Джава/Forcons/samuraiSkill1.svg");
-                        svgCanvas2.setURI("file:/D:/Джава/Forcons/samuraiSkill2.svg");
-                        svgCanvas3.setURI("file:/D:/Джава/Forcons/samuraiSkill3.svg");
-                        svgCanvas4.setURI("file:/D:/Джава/Forcons/samuraiSkill4.svg");
-                        svgCanvas5.setURI("file:/D:/Джава/Forcons/samuraiSkill5.svg");
-                        svgCanvas6.setURI("file:/D:/Джава/Forcons/samuraiSkill6.svg");
-                        break;
-                    case ("Инсектоид"):
-                    case ("Indectoid"):
-                        svgCanvas1.setURI("file:/D:/Джава/Forcons/insectSkill1.svg");
-                        svgCanvas2.setURI("file:/D:/Джава/Forcons/insectSkill2.svg");
-                        svgCanvas3.setURI("file:/D:/Джава/Forcons/insectSkill3.svg");
-                        svgCanvas4.setURI("file:/D:/Джава/Forcons/insectSkill4.svg");
-                        svgCanvas5.setURI("file:/D:/Джава/Forcons/insectSkill5.svg");
-                        svgCanvas6.setURI("file:/D:/Джава/Forcons/insectSkill6.svg");
-                        break;
-                    case ("Смотритель"):
-                    case ("Smotritel"):
-                        svgCanvas1.setURI("file:/D:/Джава/Forcons/smotritelSkill1.svg");
-                        svgCanvas2.setURI("file:/D:/Джава/Forcons/smotritelSkill2.svg");
-                        svgCanvas3.setURI("file:/D:/Джава/Forcons/smotritelSkill3.svg");
-                        svgCanvas4.setURI("file:/D:/Джава/Forcons/smotritelSkill4.svg");
-                        svgCanvas5.setURI("file:/D:/Джава/Forcons/smotritelSkill5.svg");
-                        svgCanvas6.setURI("file:/D:/Джава/Forcons/smotritelSkill6.svg");
-                        break;
-                }
-            }
-        });
+        //Создаем холст класса
+        JSVGCanvas svgCanvasClass = new JSVGCanvas();
+        svgCanvasClass.setSize(90,90);
+        svgCanvasClass.setLocation(5,563);
 
-        //Создаем пикчу класса
+        svgCanvasClass.setBackground(new Color(0,0,0,0));
 
-        //Создаем надпись имени
+        panelFull.add(svgCanvasClass);
 
         //Создаем кнопки-способности
         JButton butSkill1 = new JButton();
@@ -206,12 +142,7 @@ public class MainFrame extends JFrame {
         butSkill4.setLayout(null);
         butSkill5.setLayout(null);
         butSkill6.setLayout(null);
-        panelFull.add(butSkill1);
-        panelFull.add(butSkill2);
-        panelFull.add(butSkill3);
-        panelFull.add(butSkill4);
-        panelFull.add(butSkill5);
-        panelFull.add(butSkill6);
+
         int interval = 50;
         butSkill1.setSize(70,70);
         butSkill1.setLocation((panelFull.getWidth()-(butSkill1.getWidth()+interval)*6+interval)/2,573);
@@ -233,8 +164,126 @@ public class MainFrame extends JFrame {
         butSkill5.add(svgCanvas5);
         butSkill6.add(svgCanvas6);
 
-        //Создаем пикчи кол-ва действий
+        butSkill1.setBorderPainted(false);
+        butSkill1.setContentAreaFilled(false);
+        butSkill2.setBorderPainted(false);
+        butSkill2.setContentAreaFilled(false);
+        butSkill3.setBorderPainted(false);
+        butSkill3.setContentAreaFilled(false);
+        butSkill4.setBorderPainted(false);
+        butSkill4.setContentAreaFilled(false);
+        butSkill5.setBorderPainted(false);
+        butSkill5.setContentAreaFilled(false);
+        butSkill6.setBorderPainted(false);
+        butSkill6.setContentAreaFilled(false);
 
+        panelFull.add(butSkill1);
+        panelFull.add(butSkill2);
+        panelFull.add(butSkill3);
+        panelFull.add(butSkill4);
+        panelFull.add(butSkill5);
+        panelFull.add(butSkill6);
+
+        //Создаем надпись имени
+        JLabel labelName = new JLabel();
+        System.out.println(butSkill1.getX());
+        labelName.setSize(butSkill1.getX()-115,50);
+        labelName.setLocation(105,608-(labelName.getHeight()/2));
+
+        Font fontName = new Font("Verdana", Font.BOLD, 30);
+        labelName.setFont(fontName);
+        labelName.setVerticalAlignment(JLabel.CENTER);
+        labelName.setHorizontalAlignment(JLabel.CENTER);
+
+        //labelName.setBorder(BorderFactory.createLineBorder(Color.RED));
+
+        panelFull.add(labelName);
+
+        //Создаем холст и надпись кол-ва действий
+        JSVGCanvas svgCanvasPoint = new JSVGCanvas();
+        int widthPoint = 1280 - butSkill6.getX() - butSkill6.getWidth() - 20;
+        svgCanvasPoint.setSize(widthPoint, 100);
+        svgCanvasPoint.setLocation(butSkill6.getX()+butSkill6.getWidth()+10,608-(svgCanvasPoint.getHeight()/2));
+
+        svgCanvasPoint.setBackground(new Color(0,0,0,0));
+
+        JLabel lebelPoint = new JLabel();
+        lebelPoint.setSize(svgCanvasPoint.getSize());
+        lebelPoint.setLocation(svgCanvasPoint.getLocation());
+
+        Font fontPoint = new Font("Verdana", Font.BOLD, 40);
+        lebelPoint.setFont(fontPoint);
+        lebelPoint.setVerticalAlignment(JLabel.CENTER);
+        lebelPoint.setHorizontalAlignment(JLabel.CENTER);
+
+        //lebelPoint.setBorder(BorderFactory.createLineBorder(Color.RED));
+
+        panelFull.add(lebelPoint);
+        panelFull.add(svgCanvasPoint);
+
+        //Создаем скрол-список форсонов
+        DefaultListModel<String> forconsListModel = new DefaultListModel<>();
+        forconsListModel.addElement("1, b, Горшок, 3, 6");
+        forconsListModel.addElement("2, s, АскаМисатоРей, 2, 12");
+        forconsListModel.addElement("3, i, Стив, 1, 2");
+        forconsListModel.addElement("4, sm, Стив, 1, 0");
+        forconsListModel.addElement("5, b, Горшок, 3, 6");
+        forconsListModel.addElement("6, i, Аска, 2, 2");
+        forconsListModel.addElement("7, i, Стив, 1, 8");
+        forconsListModel.addElement("8, s, Стив, 1, 11");
+        forconsListModel.addElement("9, b, Горшок, 3, 6");
+        forconsListModel.addElement("10, s, Аска, 2, 2");
+        forconsListModel.addElement("11, s, Стив, 1, 5");
+        forconsListModel.addElement("12, sm, Стив, 1, 4");
+
+        JList<String> forconsList = new JList<>(forconsListModel);
+        forconsList.setCellRenderer(new ForconsRenderer());
+        forconsList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        JScrollPane forconsListScroll = new JScrollPane(forconsList);
+        panelFull.add(forconsListScroll);
+        forconsListScroll.setSize(220, 533);
+        forconsListScroll.setLocation(1060,25);
+
+        //создаем слушателей мыши и списка
+        forconsList.addListSelectionListener(evt -> {
+            if (!evt.getValueIsAdjusting()) {
+                String val = forconsList.getSelectedValue().toString();
+                System.out.println(val);
+                String[] subStr = val.split(", ");
+
+                svgCanvas1.setURI("file:/D:/Джава/Forcons/"+ subStr[1] +"Skill1.svg");
+                svgCanvas2.setURI("file:/D:/Джава/Forcons/"+ subStr[1] +"Skill2.svg");
+                svgCanvas3.setURI("file:/D:/Джава/Forcons/"+ subStr[1] +"Skill3.svg");
+                svgCanvas4.setURI("file:/D:/Джава/Forcons/"+ subStr[1] +"Skill4.svg");
+                svgCanvas5.setURI("file:/D:/Джава/Forcons/"+ subStr[1] +"Skill5.svg");
+                svgCanvas6.setURI("file:/D:/Джава/Forcons/"+ subStr[1] +"Skill6.svg");
+
+                svgCanvasClass.setURI("file:/D:/Джава/Forcons/"+ subStr[1] +".svg");
+
+                labelName.setText(subStr[2]);
+
+                if ((double)labelName.getFontMetrics(fontName).stringWidth(labelName.getText()) > (double)labelName.getWidth()) {
+                    int newFontSize = (int) (fontName.getSize() * (double) labelName.getWidth() /
+                            ((double) labelName.getFontMetrics(fontName).stringWidth(labelName.getText()) + 20));
+                    labelName.setFont(new Font(fontName.getName(), Font.BOLD, newFontSize));
+                }
+                else
+                    labelName.setFont(fontName);
+
+                int pointInt = Integer.parseInt(subStr[4]);
+                if (pointInt < 8) {
+                    svgCanvasPoint.setURI("file:/D:/Джава/Forcons/point" + subStr[4] + ".svg");
+                    lebelPoint.setText("");
+                }
+                else {
+                    svgCanvasPoint.setURI("file:/D:/Джава/Forcons/point0.svg");
+                    lebelPoint.setText(subStr[4] + " о. д.");
+                }
+            }
+        });
+
+        //добавляем все в фрейм
         getContentPane().setLayout(null);
         getContentPane().add(panelFull);
 

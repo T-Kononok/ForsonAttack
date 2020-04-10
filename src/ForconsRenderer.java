@@ -7,7 +7,6 @@ public class ForconsRenderer implements ListCellRenderer<String> {
 
     private JPanel fon2 = new JPanel();
     private JLabel number = new JLabel();
-    private String forsonClass;
     private JSVGCanvas svgBard = new JSVGCanvas();
     private JSVGCanvas svgInsectoid = new JSVGCanvas();
     private JSVGCanvas svgSamurai = new JSVGCanvas();
@@ -41,10 +40,15 @@ public class ForconsRenderer implements ListCellRenderer<String> {
         point.setFont(font);
         point.setVerticalAlignment(JLabel.CENTER);
         point.setHorizontalAlignment(JLabel.CENTER);
-        svgBard.setURI("file:/D:/Джава/Forcons/bard.svg");
-        svgSamurai.setURI("file:/D:/Джава/Forcons/samurai.svg");
-        svgInsectoid.setURI("file:/D:/Джава/Forcons/insect.svg");
-        svgSmotritel.setURI("file:/D:/Джава/Forcons/smotritel.svg");
+        svgBard.setURI("file:/D:/Джава/Forcons/b.svg");
+        svgSamurai.setURI("file:/D:/Джава/Forcons/s.svg");
+        svgInsectoid.setURI("file:/D:/Джава/Forcons/i.svg");
+        svgSmotritel.setURI("file:/D:/Джава/Forcons/sm.svg");
+
+        svgBard.setBackground(new Color(0,0,0,0));
+        svgSamurai.setBackground(new Color(0,0,0,0));
+        svgInsectoid.setBackground(new Color(0,0,0,0));
+        svgSmotritel.setBackground(new Color(0,0,0,0));
 
         svgBard.setSize(60, 60);
         svgSamurai.setSize(60, 60);
@@ -65,6 +69,15 @@ public class ForconsRenderer implements ListCellRenderer<String> {
         svgPoint5.setURI("file:/D:/Джава/Forcons/point5.svg");
         svgPoint6.setURI("file:/D:/Джава/Forcons/point6.svg");
         svgPoint7.setURI("file:/D:/Джава/Forcons/point7.svg");
+
+        svgPoint0.setBackground(new Color(0,0,0,0));
+        svgPoint1.setBackground(new Color(0,0,0,0));
+        svgPoint2.setBackground(new Color(0,0,0,0));
+        svgPoint3.setBackground(new Color(0,0,0,0));
+        svgPoint4.setBackground(new Color(0,0,0,0));
+        svgPoint5.setBackground(new Color(0,0,0,0));
+        svgPoint6.setBackground(new Color(0,0,0,0));
+        svgPoint7.setBackground(new Color(0,0,0,0));
 
         svgPoint0.setSize(110,30);
         svgPoint1.setSize(110,30);
@@ -111,37 +124,29 @@ public class ForconsRenderer implements ListCellRenderer<String> {
         number.setText(subStr[0]);
 
         switch (subStr[1]) {
-            case ("Бард"):
-            case ("Bard"):
+            case ("b"):
                 svgBard.setLocation(20, 0);
                 svgSamurai.setLocation(20, 1000);
                 svgInsectoid.setLocation(20, 1000);
                 svgSmotritel.setLocation(20, 1000);
-                forsonClass = "Ba";
                 break;
-            case ("Самурай"):
-            case ("Samurai"):
+            case ("s"):
                 svgBard.setLocation(20, 1000);
                 svgSamurai.setLocation(20, 0);
                 svgInsectoid.setLocation(20, 1000);
                 svgSmotritel.setLocation(20, 1000);
-                forsonClass = "Sa";
                 break;
-            case ("Инсектоид"):
-            case ("Indectoid"):
+            case ("i"):
                 svgBard.setLocation(20, 1000);
                 svgSamurai.setLocation(20, 1000);
                 svgInsectoid.setLocation(20, 0);
                 svgSmotritel.setLocation(20, 1000);
-                forsonClass = "In";
                 break;
-            case ("Смотритель"):
-            case ("Smotritel"):
+            case ("sm"):
                 svgBard.setLocation(20, 1000);
                 svgSamurai.setLocation(20, 1000);
                 svgInsectoid.setLocation(20, 1000);
                 svgSmotritel.setLocation(20, 0);
-                forsonClass = "Sm";
                 break;
             default:
                 JOptionPane.showMessageDialog(null, "Не правильно написано навзание класса!",
@@ -186,6 +191,7 @@ public class ForconsRenderer implements ListCellRenderer<String> {
                 svgPoint5.setLocation(80,1000);
                 svgPoint6.setLocation(80,1000);
                 svgPoint7.setLocation(80,1000);
+                point.setText("");
                 break;
             case (1):
                 svgPoint0.setLocation(80,1000);
@@ -196,6 +202,7 @@ public class ForconsRenderer implements ListCellRenderer<String> {
                 svgPoint5.setLocation(80,1000);
                 svgPoint6.setLocation(80,1000);
                 svgPoint7.setLocation(80,1000);
+                point.setText("");
                 break;
             case (2):
                 svgPoint0.setLocation(80,1000);
@@ -206,6 +213,7 @@ public class ForconsRenderer implements ListCellRenderer<String> {
                 svgPoint5.setLocation(80,1000);
                 svgPoint6.setLocation(80,1000);
                 svgPoint7.setLocation(80,1000);
+                point.setText("");
                 break;
             case (3):
                 svgPoint0.setLocation(80,1000);
@@ -216,6 +224,7 @@ public class ForconsRenderer implements ListCellRenderer<String> {
                 svgPoint5.setLocation(80,1000);
                 svgPoint6.setLocation(80,1000);
                 svgPoint7.setLocation(80,1000);
+                point.setText("");
                 break;
             case (4):
                 svgPoint0.setLocation(80,1000);
@@ -226,6 +235,7 @@ public class ForconsRenderer implements ListCellRenderer<String> {
                 svgPoint5.setLocation(80,1000);
                 svgPoint6.setLocation(80,1000);
                 svgPoint7.setLocation(80,1000);
+                point.setText("");
                 break;
             case (5):
                 svgPoint0.setLocation(80,1000);
@@ -236,6 +246,7 @@ public class ForconsRenderer implements ListCellRenderer<String> {
                 svgPoint5.setLocation(80,30);
                 svgPoint6.setLocation(80,1000);
                 svgPoint7.setLocation(80,1000);
+                point.setText("");
                 break;
             case (6):
                 svgPoint0.setLocation(80,1000);
@@ -246,6 +257,7 @@ public class ForconsRenderer implements ListCellRenderer<String> {
                 svgPoint5.setLocation(80,1000);
                 svgPoint6.setLocation(80,30);
                 svgPoint7.setLocation(80,1000);
+                point.setText("");
                 break;
             case (7):
                 svgPoint0.setLocation(80,1000);
@@ -256,6 +268,7 @@ public class ForconsRenderer implements ListCellRenderer<String> {
                 svgPoint5.setLocation(80,1000);
                 svgPoint6.setLocation(80,1000);
                 svgPoint7.setLocation(80,30);
+                point.setText("");
                 break;
             default:
                 if (pointInt > 0) {
@@ -284,10 +297,6 @@ public class ForconsRenderer implements ListCellRenderer<String> {
         fon2.setBackground(fonFors);
 
         return fon2;
-    }
-
-    String getForsonClass() {
-        return forsonClass;
     }
 
     String getNumber() {
