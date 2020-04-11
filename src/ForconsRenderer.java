@@ -40,9 +40,9 @@ public class ForconsRenderer implements ListCellRenderer<String> {
         point.setFont(font);
         point.setVerticalAlignment(JLabel.CENTER);
         point.setHorizontalAlignment(JLabel.CENTER);
-        svgBard.setURI("file:/D:/Джава/Forcons/b.svg");
-        svgSamurai.setURI("file:/D:/Джава/Forcons/s.svg");
-        svgInsectoid.setURI("file:/D:/Джава/Forcons/i.svg");
+        svgBard.setURI("file:/D:/Джава/Forcons/ba.svg");
+        svgSamurai.setURI("file:/D:/Джава/Forcons/sa.svg");
+        svgInsectoid.setURI("file:/D:/Джава/Forcons/in.svg");
         svgSmotritel.setURI("file:/D:/Джава/Forcons/sm.svg");
 
         svgBard.setBackground(new Color(0,0,0,0));
@@ -118,25 +118,25 @@ public class ForconsRenderer implements ListCellRenderer<String> {
     public Component getListCellRendererComponent(JList<? extends String> list, String string, int index,
                                                   boolean isSelected, boolean cellHasFocus) {
         String[] subStr;
-        String delimeter = ", ";
+        String delimeter = ",";
         subStr = string.split(delimeter);
 
         number.setText(subStr[0]);
 
         switch (subStr[1]) {
-            case ("b"):
+            case ("ba"):
                 svgBard.setLocation(20, 0);
                 svgSamurai.setLocation(20, 1000);
                 svgInsectoid.setLocation(20, 1000);
                 svgSmotritel.setLocation(20, 1000);
                 break;
-            case ("s"):
+            case ("sa"):
                 svgBard.setLocation(20, 1000);
                 svgSamurai.setLocation(20, 0);
                 svgInsectoid.setLocation(20, 1000);
                 svgSmotritel.setLocation(20, 1000);
                 break;
-            case ("i"):
+            case ("in"):
                 svgBard.setLocation(20, 1000);
                 svgSamurai.setLocation(20, 1000);
                 svgInsectoid.setLocation(20, 0);

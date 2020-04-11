@@ -1,9 +1,13 @@
 import org.apache.batik.swing.JSVGCanvas;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.Comparator;
 import java.util.Objects;
+import java.util.Vector;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -196,7 +200,7 @@ public class MainFrame extends JFrame {
         //Создаем надпись имени
         JLabel labelName = new JLabel();
         System.out.println(butSkill1.getX());
-        labelName.setSize(butSkill1.getX()-115,50);
+        labelName.setSize(butSkill1.getX()-125,50);
         labelName.setLocation(105,608-(labelName.getHeight()/2));
 
         Font fontName = new Font("Verdana", Font.BOLD, 30);
@@ -230,20 +234,37 @@ public class MainFrame extends JFrame {
         panelFull.add(lebelPoint);
         panelFull.add(svgCanvasPoint);
 
+        //создаем вектор форсонов
+        Vector<String> vectorForsons = new Vector<>();
+        vectorForsons.addElement(",ba,Горшок,3,6");
+        vectorForsons.addElement(",sa,АскаМисатоРей,2,12");
+        vectorForsons.addElement(",in,Стив,1,2");
+        vectorForsons.addElement(",sm,Стив,1,0");
+        vectorForsons.addElement(",ba,Горшок,3,6");
+        vectorForsons.addElement(",in,Аска,2,2");
+        vectorForsons.addElement(",in,Стив,1,8");
+        vectorForsons.addElement(",sa,Стив,1,11");
+        vectorForsons.addElement(",ba,Горшок,3,6");
+        vectorForsons.addElement(",sa,Аска,2,2");
+        vectorForsons.addElement(",sa,Стив,1,5");
+        vectorForsons.addElement(",sm,Стив,1,4");
+        vectorForsons.addElement(",ba,Горшок,3,6");
+        vectorForsons.addElement(",sa,Аска,2,2");
+        vectorForsons.addElement(",sa,Стив,1,5");
+        vectorForsons.addElement(",sm,Стив,1,4");
+        vectorForsons.addElement(",sa,Аска,2,2");
+        vectorForsons.addElement(",sa,Стив,1,5");
+        vectorForsons.addElement(",sm,Стив,1,4");
+        vectorForsons.addElement(",ba,Горшок,3,6");
+        vectorForsons.addElement(",sa,Аска,2,2");
+        vectorForsons.addElement(",sa,Стив,1,5");
+        vectorForsons.addElement(",sm,Стив,1,4");
+        sortPoint(vectorForsons);
+
+
         //Создаем скрол-список форсонов
         DefaultListModel<String> forconsListModel = new DefaultListModel<>();
-        forconsListModel.addElement("1, b, Горшок, 3, 6");
-        forconsListModel.addElement("2, s, АскаМисатоРей, 2, 12");
-        forconsListModel.addElement("3, i, Стив, 1, 2");
-        forconsListModel.addElement("4, sm, Стив, 1, 0");
-        forconsListModel.addElement("5, b, Горшок, 3, 6");
-        forconsListModel.addElement("6, i, Аска, 2, 2");
-        forconsListModel.addElement("7, i, Стив, 1, 8");
-        forconsListModel.addElement("8, s, Стив, 1, 11");
-        forconsListModel.addElement("9, b, Горшок, 3, 6");
-        forconsListModel.addElement("10, s, Аска, 2, 2");
-        forconsListModel.addElement("11, s, Стив, 1, 5");
-        forconsListModel.addElement("12, sm, Стив, 1, 4");
+        vectorForsons.forEach(forconsListModel::addElement);
 
         JList<String> forconsList = new JList<>(forconsListModel);
         forconsList.setCellRenderer(new ForconsRenderer());
@@ -259,45 +280,156 @@ public class MainFrame extends JFrame {
         //создаем слушателей мыши и списка
         forconsList.addListSelectionListener(evt -> {
             if (!evt.getValueIsAdjusting()) {
-                String val = forconsList.getSelectedValue().toString();
-                System.out.println(val);
-                String[] subStr = val.split(", ");
+                if (forconsList.getSelectedIndex() != -1) {
+                    String val = forconsList.getSelectedValue();
+                    System.out.println(val);
+                    String[] subStr = val.split(",");
 
-                svgCanvas1.setURI("file:/D:/Джава/Forcons/"+ subStr[1] +"Skill1.svg");
-                svgCanvas2.setURI("file:/D:/Джава/Forcons/"+ subStr[1] +"Skill2.svg");
-                svgCanvas3.setURI("file:/D:/Джава/Forcons/"+ subStr[1] +"Skill3.svg");
-                svgCanvas4.setURI("file:/D:/Джава/Forcons/"+ subStr[1] +"Skill4.svg");
-                svgCanvas5.setURI("file:/D:/Джава/Forcons/"+ subStr[1] +"Skill5.svg");
-                svgCanvas6.setURI("file:/D:/Джава/Forcons/"+ subStr[1] +"Skill6.svg");
+                    svgCanvas1.setURI("file:/D:/Джава/Forcons/" + subStr[1] + "Skill1.svg");
+                    svgCanvas2.setURI("file:/D:/Джава/Forcons/" + subStr[1] + "Skill2.svg");
+                    svgCanvas3.setURI("file:/D:/Джава/Forcons/" + subStr[1] + "Skill3.svg");
+                    svgCanvas4.setURI("file:/D:/Джава/Forcons/" + subStr[1] + "Skill4.svg");
+                    svgCanvas5.setURI("file:/D:/Джава/Forcons/" + subStr[1] + "Skill5.svg");
+                    svgCanvas6.setURI("file:/D:/Джава/Forcons/" + subStr[1] + "Skill6.svg");
 
-                svgCanvasClass.setURI("file:/D:/Джава/Forcons/"+ subStr[1] +".svg");
+                    svgCanvasClass.setURI("file:/D:/Джава/Forcons/" + subStr[1] + ".svg");
 
-                labelName.setText(subStr[2]);
+                    labelName.setText(subStr[2]);
 
-                if ((double)labelName.getFontMetrics(fontName).stringWidth(labelName.getText()) > (double)labelName.getWidth()) {
-                    int newFontSize = (int) (fontName.getSize() * (double) labelName.getWidth() /
-                            ((double) labelName.getFontMetrics(fontName).stringWidth(labelName.getText()) + 20));
-                    labelName.setFont(new Font(fontName.getName(), Font.BOLD, newFontSize));
-                }
-                else
-                    labelName.setFont(fontName);
+                    if ((double) labelName.getFontMetrics(fontName).stringWidth(labelName.getText()) > (double) labelName.getWidth()) {
+                        int newFontSize = (int) (fontName.getSize() * (double) labelName.getWidth() /
+                                ((double) labelName.getFontMetrics(fontName).stringWidth(labelName.getText()) + 20));
+                        labelName.setFont(new Font(fontName.getName(), Font.BOLD, newFontSize));
+                    } else
+                        labelName.setFont(fontName);
 
-                int pointInt = Integer.parseInt(subStr[4]);
-                if (pointInt < 8) {
-                    svgCanvasPoint.setURI("file:/D:/Джава/Forcons/point" + subStr[4] + ".svg");
+                    int pointInt = Integer.parseInt(subStr[4]);
+                    if (pointInt < 8) {
+                        svgCanvasPoint.setURI("file:/D:/Джава/Forcons/point" + subStr[4] + ".svg");
+                        lebelPoint.setText("");
+                    } else {
+                        svgCanvasPoint.setURI("file:/D:/Джава/Forcons/point0.svg");
+                        lebelPoint.setText(subStr[4] + " о. д.");
+                    }
+                } else {
+                    svgCanvas1.setURI(null);
+                    svgCanvas2.setURI(null);
+                    svgCanvas3.setURI(null);
+                    svgCanvas4.setURI(null);
+                    svgCanvas5.setURI(null);
+                    svgCanvas6.setURI(null);
+                    svgCanvasClass.setURI(null);
+                    labelName.setText("");
+                    svgCanvasPoint.setURI(null);
                     lebelPoint.setText("");
                 }
-                else {
-                    svgCanvasPoint.setURI("file:/D:/Джава/Forcons/point0.svg");
-                    lebelPoint.setText(subStr[4] + " о. д.");
-                }
             }
+        });
+
+        //создаем кнопки для сортировки
+        JButton butSortPoint = new JButton();
+        JButton butSortClass = new JButton();
+
+        butSortPoint.setText("p");
+        butSortClass.setText("c");
+
+        butSortPoint.setSize(45,20); //1060 1263
+        butSortPoint.setLocation(1263-(butSortPoint.getWidth()*2),5);
+        butSortClass.setSize(butSortPoint.getSize());
+        butSortClass.setLocation(butSortPoint.getX()+butSortPoint.getWidth(),butSortPoint.getY());
+
+        panelFull.add(butSortPoint);
+        panelFull.add(butSortClass);
+
+        //создаем слушателей сортировки
+        butSortPoint.addActionListener(ev -> {
+            butSortPoint.setSize(45,5); //1060 1263
+            butSortPoint.setLocation(1263-(butSortPoint.getWidth()*2),20);
+            butSortClass.setSize(45,20);
+            butSortClass.setLocation(butSortPoint.getX()+butSortPoint.getWidth(),5);
+
+            forconsList.clearSelection();
+            forconsListModel.clear();
+
+            sortPoint(vectorForsons);
+            vectorForsons.forEach(forconsListModel::addElement);
+
+        });
+        butSortClass.addActionListener(ev -> {
+            butSortPoint.setSize(45,20); //1060 1263
+            butSortPoint.setLocation(1263-(butSortPoint.getWidth()*2),5);
+            butSortClass.setSize(45,5);
+            butSortClass.setLocation(butSortPoint.getX()+butSortPoint.getWidth(),20);
+
+            forconsList.clearSelection();
+            forconsListModel.clear();
+
+            sortClass(vectorForsons);
+            vectorForsons.forEach(forconsListModel::addElement);
         });
 
         //добавляем все в фрейм
         getContentPane().setLayout(null);
         getContentPane().add(panelFull);
 
+    }
+    //"12, sm, Стив, 1, 4"
+
+    private void sortPoint(Vector<String> vector) {
+        Comparator<String> comparatorPoint = (s, t1) -> {
+            int is = Integer.parseInt(s.substring(s.lastIndexOf(",")+1));
+            int it = Integer.parseInt(t1.substring(t1.lastIndexOf(",")+1));
+            if (is >= it)
+                if (is == it)
+                    return 0;
+                else
+                    return -1;
+            else
+                return 1;
+        };
+        vector.sort(comparatorPoint);
+        for (int i = 0; i < vector.size(); i++)
+            vector.set(i, (i+1) + vector.get(i).substring(vector.get(i).indexOf(",")));
+    }
+
+    private void sortClass(Vector<String> vector) {
+        Comparator<String> comparatorClass = (s, t1) -> {
+            String ss = s.substring(s.indexOf(",")+1,s.indexOf(",")+3);
+            String st = t1.substring(t1.indexOf(",")+1,t1.indexOf(",")+3);
+            switch (ss){
+                case ("ba"):
+                    if (st.equals("ba"))
+                        return 0;
+                    else
+                        return -1;
+                case ("sa"):
+                    switch (st){
+                        case ("ba"):
+                            return 1;
+                        case ("sa"):
+                            return 0;
+                        default:
+                            return -1;
+                    }
+                case ("in"):
+                    switch (st) {
+                        case ("sm"):
+                            return -1;
+                        case ("tn"):
+                            return 0;
+                        default:
+                            return 1;
+                    }
+                default:
+                    if (st.equals("sm"))
+                        return 0;
+                    else
+                        return 1;
+            }
+        };
+        vector.sort(comparatorClass);
+        for (int i = 0; i < vector.size(); i++)
+            vector.set(i, (i+1) + vector.get(i).substring(vector.get(i).indexOf(",")));
     }
 
     public static void main(String[] args) {
