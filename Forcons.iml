@@ -17,8 +17,9 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="batik-swing-1.7" level="project" />
-    <orderEntry type="library" name="batik-all-1.7.0" level="project" />
     <orderEntry type="library" name="batik-dom-1.7" level="project" />
     <orderEntry type="library" name="batik-anim-1.7" level="project" />
+    <orderEntry type="library" name="batik-all-1.7.0" level="project" />
+    <orderEntry type="library" name="poi-4.1.2" level="project" />
   </component>
 </module>

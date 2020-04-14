@@ -56,7 +56,6 @@ class MyScrollbarUI extends BasicScrollBarUI {
     protected void paintThumb(Graphics g, JComponent c, Rectangle r) {
 
         g.drawImage(imageTumb,r.x, r.y, r.width, r.height, null);
-        System.out.println(r.width);
 
     }
 

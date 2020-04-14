@@ -1,22 +1,30 @@
 import org.apache.batik.swing.JSVGCanvas;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.ss.usermodel.*;
+
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.Vector;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.*;
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.plaf.ScrollBarUI;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 public class MainFrame extends JFrame {
 
     private JFileChooser fileChooser = null;
+    private HSSFWorkbook wb_10_FM3;
+    private ArrayList<ArrayList<String>> matr_10_FM3;
+    private JTable journalTable;
 
     private MainFrame() {
 
@@ -41,32 +49,22 @@ public class MainFrame extends JFrame {
 
         JMenu openJournalMenu = new JMenu("Открыть журнал");
         fileMenu.add(openJournalMenu);
+
         JMenuItem openJournal_10FM3_Menu = openJournalMenu.add("10 ФМ-3");
         openJournal_10FM3_Menu.addActionListener(ev -> {
             if (fileChooser==null) {
                 fileChooser = new JFileChooser();
                 fileChooser.setCurrentDirectory(new File("."));
             }
-            //if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION)
-                //openGraphics(fileChooser.getSelectedFile());
-        });
-        JMenuItem openJournal_11FM2_Menu = openJournalMenu.add("11 ФМ-2");
-        openJournal_11FM2_Menu.addActionListener(ev -> {
-            if (fileChooser==null) {
-                fileChooser = new JFileChooser();
-                fileChooser.setCurrentDirectory(new File("."));
+            if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+                wb_10_FM3 = readWorkbook(fileChooser.getSelectedFile().getPath());
+                readMatr();
+//                for (ArrayList<String> strings : matr_10_FM3) {
+//                    for (String string : strings) System.out.print(string + " ");
+//                    System.out.println();
+//                }
+                for (ArrayList<String> strings : matr_10_FM3) System.out.println(strings.size());
             }
-            //if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION)
-            //openGraphics(fileChooser.getSelectedFile());
-        });
-        JMenuItem openJournal_11FM3_Menu = openJournalMenu.add("11 ФМ-3");
-        openJournal_11FM3_Menu.addActionListener(ev -> {
-            if (fileChooser==null) {
-                fileChooser = new JFileChooser();
-                fileChooser.setCurrentDirectory(new File("."));
-            }
-            //if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION)
-            //openGraphics(fileChooser.getSelectedFile());
         });
 
         JMenuItem openForconsMenu = fileMenu.add("Открыть форсонов");
@@ -75,8 +73,8 @@ public class MainFrame extends JFrame {
                 fileChooser = new JFileChooser();
                 fileChooser.setCurrentDirectory(new File("."));
             }
-            //if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION)
-            //openGraphics(fileChooser.getSelectedFile());
+            if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+            }
         });
 
         JMenuItem saveMenu = fileMenu.add("Сохранить");
@@ -85,12 +83,16 @@ public class MainFrame extends JFrame {
                 fileChooser = new JFileChooser();
                 fileChooser.setCurrentDirectory(new File("."));
             }
-            //if (fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION)
-            //saveToGraphicsFile(fileChooser.getSelectedFile());
+            if (fileChooser.showSaveDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
+                writeWorkbook(wb_10_FM3,fileChooser.getSelectedFile().getPath());
+            }
+
         });
 
-        //Создаем скрол-таблицу журнала
-        JTable journalTable = new JTable();
+
+        journalTable = new JTable(new MyTableModel(null));
+        journalTable.setTableHeader(null);
+        //journalTable.setDefaultRenderer(String.class, new MyTableCellRenderer());
         JScrollPane journalTableScroll = new JScrollPane(journalTable);
         journalTableScroll.getVerticalScrollBar().setUI(new MyScrollbarUI());
         journalTableScroll.getHorizontalScrollBar().setUI(new MyScrollbarUI());
@@ -104,7 +106,6 @@ public class MainFrame extends JFrame {
         journalTableScroll.setLocation(0,25);
 
         panelFull.add(journalTableScroll);
-
         //создаем холсты для способностей
         JSVGCanvas svgCanvas1 = new JSVGCanvas();
         JSVGCanvas svgCanvas2 = new JSVGCanvas();
@@ -199,7 +200,6 @@ public class MainFrame extends JFrame {
 
         //Создаем надпись имени
         JLabel labelName = new JLabel();
-        System.out.println(butSkill1.getX());
         labelName.setSize(butSkill1.getX()-125,50);
         labelName.setLocation(105,608-(labelName.getHeight()/2));
 
@@ -282,7 +282,6 @@ public class MainFrame extends JFrame {
             if (!evt.getValueIsAdjusting()) {
                 if (forconsList.getSelectedIndex() != -1) {
                     String val = forconsList.getSelectedValue();
-                    System.out.println(val);
                     String[] subStr = val.split(",");
 
                     svgCanvas1.setURI("file:/D:/Джава/Forcons/" + subStr[1] + "Skill1.svg");
@@ -373,7 +372,7 @@ public class MainFrame extends JFrame {
         getContentPane().add(panelFull);
 
     }
-    //"12, sm, Стив, 1, 4"
+    //", sm, Стив, 1, 4"
 
     private void sortPoint(Vector<String> vector) {
         Comparator<String> comparatorPoint = (s, t1) -> {
@@ -430,6 +429,74 @@ public class MainFrame extends JFrame {
         vector.sort(comparatorClass);
         for (int i = 0; i < vector.size(); i++)
             vector.set(i, (i+1) + vector.get(i).substring(vector.get(i).indexOf(",")));
+    }
+
+    private static HSSFWorkbook readWorkbook(String filename) {
+        try {
+            POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(filename));
+            return new HSSFWorkbook(fs);
+        }
+        catch (Exception e) {
+            return null;
+        }
+    }
+
+    private static void writeWorkbook(HSSFWorkbook wb, String fileName) {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(fileName);
+            wb.write(fileOut);
+            fileOut.close();
+        }
+        catch (Exception e) {
+            //Обработка ошибки
+        }
+    }
+
+    private void readMatr() {
+        assert wb_10_FM3 != null;
+        HSSFSheet sheet = wb_10_FM3.getSheet("3 четверть");
+        Iterator rowIter = sheet.rowIterator();
+        matr_10_FM3 = new ArrayList<>();
+        rowIter.next();
+        int countRow = 0;
+        while (rowIter.hasNext() && countRow < 24) {
+            countRow++;
+            HSSFRow row = (HSSFRow) rowIter.next();
+            Iterator cellIter = row.cellIterator();
+            ArrayList<String> arr = new ArrayList<>();
+            cellIter.next();
+            cellIter.next();
+            int countCell = 0;
+            while (cellIter.hasNext() && countCell < 50) {
+                countCell++;
+                HSSFCell cell = (HSSFCell) cellIter.next();
+                while (arr.size() + 2 < cell.getColumnIndex() && countCell < 50) {
+                    countCell++;
+                    String str = "";
+                    arr.add(str);
+                }
+                String str;
+                if (cell.getCellType() == CellType.NUMERIC)
+                    str = (int) cell.getNumericCellValue() + "";
+                else
+                    if (cell.getCellType() == CellType.STRING)
+                        str = cell.getStringCellValue();
+                    else
+                        str = "(F)";
+                arr.add(str);
+            }
+            matr_10_FM3.add(arr);
+        }
+        journalTable.setModel(new MyTableModel(matr_10_FM3));
+        journalTable.setTableHeader(null);
+        journalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        journalTable.setRowHeight(21);
+        TableColumnModel columnModel = journalTable.getColumnModel();
+        Enumeration<TableColumn> e = columnModel.getColumns();
+        while ( e.hasMoreElements() ) {
+            TableColumn column = e.nextElement();
+            column.setPreferredWidth(21);
+        }
     }
 
     public static void main(String[] args) {
